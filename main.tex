@@ -101,7 +101,7 @@
 %
 % The abstract is a short summary of the work to be presented in the article.
 \begin{abstract}
-The Entity Linking (EL) task is concerned with linking entity mentions in a text collection with their corresponding knowledge-base entries. Despite the progress made in the evaluation of EL systems, there is still much work to be done, where this Ph.D. research tackles issues concerning EL evaluation. Among these issues, we stress (a)~the lack of datasets that allow for cross-language comparison, (b)~the lack of consensus about the definition of ``entity'', (c)~the lack of evaluation metrics that allow for different notions of entities, and (d)~the focus on evaluating high-level systems rather than low-level techniques. By addressing these challenges and better understanding the performance of EL systems, our hypothesis is that we can create a more general, more configurable EL framework that can be better adapted to the needs of a particular application. In the early stages of this PhD work, we have identified these problems and begun to address (a--c), publishing initial results that constitute a significant step forward in our investigation. However, there are still further challenges that must be addressed before we reach our goal. Our next steps thus involve proposing a more fluid definition of ``entity'' adaptable to different applications, the definition of quality measures that allow for comparing EL approaches targeting different types of entities, as well as the creation of a customizable EL framework that allows for composing and evaluating individual techniques as appropriate to a particular task.
+The Entity Linking (EL) task is concerned with linking entity mentions in a text collection with their corresponding knowledge-base entries. Despite the progress made in the evaluation of EL systems, there is still much work to be done, where this Ph.D. research tackles issues concerning EL evaluation. Among these issues, we stress (a)~the lack of consensus about the definition of ``entity'' and the lack of evaluation metrics that allow for different notions of entities, (b)~the lack of datasets that allow for cross-language comparison, and (c)~the focus on evaluating high-level systems rather than low-level techniques. By addressing these challenges and better understanding the performance of EL systems, our hypothesis is that we can create a more general, more configurable EL framework that can be better adapted to the needs of a particular application. In the early stages of this PhD work, we have identified these problems and begun to address (a) and (b), publishing initial results that constitute a significant step forward in our investigation. However, there are still further challenges that must be addressed before we reach our goal. Our next steps thus involve proposing a more fluid definition of ``entity'' adaptable to different applications, the definition of quality measures that allow for comparing EL approaches targeting different types of entities, as well as the creation of a customizable EL framework that allows for composing and evaluating individual techniques as appropriate to a particular task.
 \end{abstract}
 
 %
@@ -212,7 +212,7 @@ In some more recent EL systems, the division between the EL and ED phases is les
 Several EL approaches have been proposed in the literature. Some of them take annotations, KB entities and their relationship as a graph and perform heuristic to find the proper matching. For instance, Babelfy~\cite{0001RN14} and AIDA~\cite{HoffartYBFPSTTW11} search the densest sub-graph applying a Random Walk with Restart and a greedy algorithm respectively. Other approaches as TagME~\cite{FerraginaS10} , THD~\cite{DojchinovskiK13}, DBpedia Spotlight~\cite{MendesJGB11} and FREME~\cite{SasakiDN16} are based on similarity functions between mentions and the KB content. For instance, TagME ranks the candidate entities by two functions: \textit{commonness} and \textit{relatedness}, the first count how frequently an anchor text is linked to a particular Wikipedia entity and the second, returns how often candidate entities for different mentions are annotated from the same Wikipedia page. On the other hand, WIKIME~\cite{TsaiR16} uses multilingual embedding which is trained for words and Wikipedia titles. 
 
 %--------------------------------------------------------------------
-\section{PROPOSED RESEARCH}
+\section{PROPOSED APPROACH/RESULTS}
 
 The present Ph.D. work proposes to address a variety of open questions regarding the evaluation of EL systems. In this direction, the following research questions are being or will be addressed:
 
@@ -350,29 +350,16 @@ Our general hypothesis in this Ph.D. work is that when it comes to EL systems, o
 %---------------------------------------------------------------------
 \section{Methodology}
 
-Despite the formulation and addressing of this issues constitute a step forward in our investigation, our next steps are aimed to the proposition of a universal definition of ``entity'' that could integrate all the work done, and well as a quality measure that allow the comparison of approaches that are targeting a different set of entities. In this direction, our further work can be outlined through the following tasks:
-
-\begin{enumerate}
-    \item Review the state-of-the-art of current quality measures. Despite that many quality measures have been adopted in El from related areas (e.g., precision, recall, F$_1$, Accuracy), none of them take into account the differentiation of strict and relaxed annotations. 
-    
-    \item Propose a categorization of mention that allows the inclusion of current entity definitions, rather than only separate them on strict and relaxed.
-    \item Design and Build an EL architecture focused on multilingual environments.
-    \item Implement a general machine-learning framework based on the aforementioned architectures that allow us to combine features according to the application scenario.
-    
-    
-\end{enumerate}
+Our next steps are aimed at understanding the consensus in the community regarding what is an ``entity'' in the context of EL, and defining evaluation protocols (datasets and metrics) accordingly. Further into the future, we aim to start work on the configurable EL framework. More specifically, the steps currently in progress are: (1) Review the state-of-the-art in measures used for EL evaluation. (2) Issue a questionnaire to the EL community to understand the current consensus on the goal of EL systems. (3) Propose a categorization of entities that allows for the inclusion/exclusion of entities per the application requirements. (4) Propose finer-grained evaluation protocols for EL according to previous findings. Later we further wish to being to: (5) Implement a general EL framework based on the previous results that allows us to evaluate and combine techniques according to the application scenario, comparing results against state-of-the-art EL systems in different settings.
 
 
 %----------------------------------------------------------------------------
 \section{Conclusion}
 
-As a phD proposal, we plan to develop a general machine-learning EL framework that allows us to overcome state-of-the-art approaches, specifically dealing with multilingual context. However, this ongoing research has been complicated due to several problems that difficult the progress. For instance, the lack of consensus about what should entity linking link, the scarcity of annotated datasets with the same text in different languages, and the lack of criteria of current quality measures to distinguish strict and relaxed annotations according to the different domains. 
-
-For this reason, in this paper we show what we are done to overcome this inconvenient. We stress that the definition of entity should be associated with the domain of application, as well as a new multilingual dataset that contains the same document, sentences and annotations coss-language. Du to is datasets properties, we use it to figure out that is better to translate text -- by machine translation -- and it as input for some EL approaches, than applied their own multilingual model. As future work, we plan to propose a quality measure that distinguish between strict and relaxed annotations. 
+This Ph.D.\ proposal is motivated by the hypothesis that for EL systems, one size does not fit all. Our first aim has been to understand how the goal of EL systems may vary across different applications and how that affects the consensus of what is an ``entity''; this work remains ongoing. Our second aim is to consider how different EL systems perform for different languages, where we have published some results and proposed a novel dataset along these lines. Our third aim is to develop a general EL framework that allows greater configurability for a given application and setting. Our overall ambition is to reach a greater understanding of how EL techniques perform in different settings and arrive at a practical framework that can be used in a broader variety of applications that can, potentially, benefit from the results of the EL task.
 
 %----------------------------------------------------------------------------
-\section{Acknowledgments}
-I want to thank my advisors Aidan Hogan ad Barbara Poblete for supervising my PhD research. This work was supported by CONICYT-PCHA/Doctorado Nacional/2016-21160017 and by the Millennium Institute for Foundational Research on Data (IMFD).
+\paragraph{Acknowledgments:} I wish to thank Aidan Hogan and Barbara Poblete for supervising my PhD research. This work was supported by CONICYT-PCHA/Doctorado Nacional/2016-21160017 and by the Millennium Institute for Foundational Research on Data (IMFD).
 
 %
 % The next two lines define the bibliography style to be used, and the bibliography file.
