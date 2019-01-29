@@ -212,40 +212,51 @@ In some more recent EL systems, the division between the EL and ED phases is les
 Several EL approaches have been proposed in the literature. Some of them take annotations, KB entities and their relationship as a graph and perform heuristic to find the proper matching. For instance, Babelfy~\cite{0001RN14} and AIDA~\cite{HoffartYBFPSTTW11} search the densest sub-graph applying a Random Walk with Restart and a greedy algorithm respectively. Other approaches as TagME~\cite{FerraginaS10} , THD~\cite{DojchinovskiK13}, DBpedia Spotlight~\cite{MendesJGB11} and FREME~\cite{SasakiDN16} are based on similarity functions between mentions and the KB content. For instance, TagME ranks the candidate entities by two functions: \textit{commonness} and \textit{relatedness}, the first count how frequently an anchor text is linked to a particular Wikipedia entity and the second, returns how often candidate entities for different mentions are annotated from the same Wikipedia page. On the other hand, WIKIME~\cite{TsaiR16} uses multilingual embedding which is trained for words and Wikipedia titles. 
 
 %--------------------------------------------------------------------
-\section{PROPOSED APPROACH}
-While our Ph.D. proposal intent to propose a multilingual EL approach, this research is only focused on all work done so far, previously to its proposition. Due to the specified problem, we focus this work in some aspect that conducts to a better evaluation. In this direction, the following research questions will be addressed:
+\section{PROPOSED RESEARCH}
+
+The present Ph.D. work proposes to address a variety of open questions regarding the evaluation of EL systems. In this direction, the following research questions are being or will be addressed:
+
 \begin{enumerate}
     \item What should Entity Linking link?
-    \begin{itemize}
-        \item[a)] What is an entity?
+    \begin{enumerate}
+        \item How can we define the goal of the EL task?
+        \item Is consensus possible on the definition of an ``entity''?
+        \item If not, how can we define benchmark EL datasets and what metrics can we use to reflect the lack of consensus?
         %\item[b)] Why more than one entity definition?
-    \end{itemize}
+    \end{enumerate}
     
-    \item How well EL systems perform outside of English?
-    \begin{itemize}
-        \item[a)] How does EL performance differ between English and Spanish?
-        \item[b)] Can we apply EL approaches to text corpora written in a uncover language?
-        \item[c)] Does the performance of the multilingual EL approaches depend on the input granularity?
-    \end{itemize}
+    \item How well do EL systems perform in multilingual settings?
+    \begin{enumerate}
+    	\item How can we compare EL performance across langauges?
+        \item How do EL systems perform for different languages?
+        \item Why do results differ across languages?
+        \item Are multilingual EL approaches necessary with recent improvement in machine translation? 
+    \end{enumerate}
     
-    \item Do the current multilingual datasets allow cross-lingual comparisons of system outputs?
-    \item Are multilingual EL approaches necessary with recent improvement in machine translation? 
-    \begin{itemize}
-        \item[a)] Could we not simply focus on supporting one language in the EL system and translate the input text to that language?
-    \end{itemize}
+    \item How can we adapt and configure EL techniques for different applications?
+    \begin{enumerate}
+    	\item What are the specific applications for EL?
+    	\item What are the different settings that can be considered?
+    	\item Which techniques work best under what assumptions?
+    	\item How can existing EL techniques be best configured to meet the needs of a particular application setting?
+    \end{enumerate}
 \end{enumerate}
+
+We now discuss these three high-level research questions in more detail, describing the issues faced, as well as the ongoing work and plans for future work to address them.
 
 \subsection{Lack of consensus}
 
-The concept of ``named entity'' was firstly coined by 6th Message Understanding Conference~\cite{GrishmanS96} (MUC-6) where the entities are gather in the classes \textit{Person}, \textit{Location}, \textit{Organization} and other numeric/temporal expressions. Many ER models and ER benchmark datasets were proposed to recognize entities from these classes. This perspective is inherited by many End-to-End EL systems which keep identifying mentions with ER tools. However, mentions are no longer simply recognized in EL, but also linked to a reference KB that contains also entities that do not correspond to traditional MUC-6 types. For instance, in Figure~1 all the involved systems link the mention ``Michael Jackon'' belonging to the class \textit{Person}, but there is a disagreement to link ``Michael Jackson: One'' which is a theatrical productions by Cirque du Soleil with available corresponding entities in DBpedia and Wikipedia. In this lines, some authors have extended the initial MUC-6 classes, including also \textit{products}, \textit{financial entities}~\cite{MinardSUAESS16}, \textit{films}, \textit{scientists}~\cite{EtzioniCDPSSWY05}, etc. On the other hand, other authors propose to separate current classes to more specific ones, for instance, (e.g., deriving \textit{city}, \textit{state}, \textit{country} from the class \textit{location}~\cite{Fleischman01}).
+The concept of ``named entity'' was first coined by the 6th Message Understanding Conference~\cite{GrishmanS96} (MUC-6) where entities are assigned to one of the classes \textit{Person}, \textit{Location}, \textit{Organization} and other numeric/temporal expressions. Hence the definition of an entity follows from these classes: any instance of such a class is considered an entity, and per the consensus of MUC-6, the goal of NER is to identify mentions of entities of one of these classes.
 
-Class-based definitions of entities are inflexible because leave out several entities from large KBs, for instance, only Wikidata has entities from 50,000 unique classes. Therefore, other authors advocate for more general definitions, but these often lack formality~\cite{EckhardtHPS14, UrenCIHVMC06}. For example, the definition ``substrings corresponding to world entities'' used by Ling et al.~\cite{LingSW15} is cyclical, due to use the word ``entity'' to define what is it. 
+With the advent of large-scale, diverse KBs, interest grew in the EL task, which not only identifies (and types) entities in a text, but also links them to the KB. Many ER models and ER benchmark datasets built upon the extensive work in the NER community, proposing to recognize the same entities from the same classes but additionally link them to the KB. This perspective is inherited by many EL systems which continue to identify mentions with NER tools. However, the KBs to which EL systems link often contain classes not considered in the MUC-6 consensus. 
 
-Instead of answering the semantic question ``what is an `entity'?'', our position is to answer better the practical question ``what should Entity Linking link?''. In this context, we stress that we should target those entities that are aware of the application~\cite{ourAMW2018}. In this way, the targeted mentions for Semantic Search task, for instance, maybe can be different of those included in a Relation Extraction problem. Since we can target only \textit{Person} entities to find all document about pop singers in a semantic search, but in contrast, it is desirable to incorporate a greater number of mentions for discovering relations. 
+Hence EL systems began to develop custom ER techniques that target a broader range of entity types. For instance, in Figure~\ref{fig:exp1}, ``Michael Jackson'' would belong to the MUC-6 class \textit{Person}, whereas ``Michael Jackson: One'' -- though present as an entity in KBs such as DBpedia and Wikipedia -- would be excluded by MUC-6, referring to a theatrical production. Along these lines, some authors chose to extend the initial MUC-6 classes, including also \textit{Products}, \textit{Financial Entities}~\cite{MinardSUAESS16}, \textit{Films}, \textit{Scientists}~\cite{EtzioniCDPSSWY05}, etc. On the other hand, other authors propose to separate current classes to more specific ones, for instance, deriving \textit{City}, \textit{State}, \textit{Country} from the class \textit{Location}~\cite{Fleischman01}. Generally speaking, however, 
+class-based definitions of entities are inflexible as they cannot hope to adapt to the variety of types present in large KBs. For instance, Wikidata alone has entities from 50,000 unique classes. Therefore, other authors advocate for more general definitions, but these often lack formality~\cite{EckhardtHPS14, UrenCIHVMC06}. One option is to use a \textit{Miscellaneous} class of entities, but this leaves the question of what sorts of entities this class should cover. Other authors have tried to provide a more general definition of entity, such as the definition ``\textit{substrings corresponding to world entities}'' used by Ling et al.~\cite{LingSW15}; however, such a definition is cyclical, due to using the word ``\textit{entity}'' in the definition of an ``\textit{entity}''. 
+
+\paragraph{Proposal:} Instead of addressing the abstract question ``\textit{what is an `entity'?}'', our position is to rather address the more practical question ``\textit{what should Entity Linking link?}''. Posed this way, the question suggests a practical response: ``\textit{it depends on the application!}''~\cite{ourAMW2018}. For example, in a semantic search scenario, where the goal is to find documents mentioning particular entities or particular types of entities, finding all repeated mentions of an entity may not be so key a requirement for EL: finding any mention in the document might suffice. On the other hand, for relation extraction, each mention might refer to a potential relation in the text, and hence the requirements for EL change. With this in mind, our goals are to first understand on which types of entities there is consensus in the community, and on which not. Then we wish to better understand what are the applications for EL, and how the choice of application affects the requirements of the EL system. Finally we aim to develop EL benchmarks and metrics that -- rather than assuming a one-size-fits-all definition of an entity -- reflect our findings in terms of varying consensus, applications and requirements.
 
 %---------------------------------------------------------------------
-\subsection{Non-English scenarios in EL}
-
+\subsection{Multilingual EL}
 
 
 \newcommand{\ccell}[1]{\multicolumn{1}{c}{#1}}
@@ -253,67 +264,68 @@ Instead of answering the semantic question ``what is an `entity'?'', our positio
 \begin{table}[tb!]
 \centering
 
-\caption{Survey of dataset for EL task. For multilingual datasets, the quantities shown refer to the English data available. We present metadata about the relaxed and strict version of our dataset by \textsc{VoxEL}$_R$ and \textsc{VoxEL}$_S$ respectively.}
+\caption{Survey of popular EL datasets; for multilingual datasets, the quantities shown refer to the English data available. We present metadata about the relaxed and strict version of our dataset by \textsc{VoxEL}$_R$ and \textsc{VoxEL}$_S$ respectively.}
 \label{tab:datasets} 
 %\resizebox{\textwidth}{!}{
 \begin{tabular}{lc}
 \toprule
 \textbf{Dataset}~~~~~~~~~~~~~~~~~~ & \ccell{\textbf{Languages}}\\\midrule
-AIDA/CoNLL-Complete~\cite{aida2011}&EN \\\midrule
-KORE50~\cite{kore50}                &EN \\\midrule
-IITB~\cite{IITB2009}                &EN \\\midrule
-ACE2004~\cite{aquaint}              &EN\\\midrule
-AQUAINT~\cite{aquaint}              &EN \\\midrule
-MSNBC~\cite{cucerzan2007large}      &EN \\\midrule
+AIDA/CoNLL-Complete~\cite{aida2011}&EN \\
+KORE50~\cite{kore50}                &EN \\
+IITB~\cite{IITB2009}                &EN \\
+ACE2004~\cite{aquaint}              &EN\\
+AQUAINT~\cite{aquaint}              &EN \\
+MSNBC~\cite{cucerzan2007large}      &EN \\
 DBpedia Spotlight
-\cite{mendes2011dbpedia}            &EN \\\midrule
-N3-RSS 500~\cite{n3}                &EN \\\midrule
-Reuters 128~\cite{n3}               &EN \\\midrule
+\cite{mendes2011dbpedia}            &EN \\
+N3-RSS 500~\cite{n3}                &EN \\
+Reuters 128~\cite{n3}               &EN \\
 Wes2015~\cite{wes2015}              &EN \\\midrule
-News-100~\cite{n3}                  &DE \\\midrule
-Thibaudet~\cite{renden2016}         &FR \\\midrule
+News-100~\cite{n3}                  &DE \\
+Thibaudet~\cite{renden2016}         &FR \\
 Bergson~\cite{renden2016}           &FR \\\midrule
 SemEval 2015 
-Task 13~\cite{moro2015semeval}      &EN,ES,IT \\ \midrule
+Task 13~\cite{moro2015semeval}      &EN,ES,IT \\
 DBpedia Abstracts
-~\cite{abstracts2016}               &DE,EN,ES,FR,IT,JA,NL \\\midrule
-MEANTIME \cite{meantime2016}        &EN,ES,IT,NL \\\midrule 
-VoxEL$_R$                           &DE,EN,ES,FR,IT\\\midrule  
+~\cite{abstracts2016}               &DE,EN,ES,FR,IT,JA,NL \\
+MEANTIME \cite{meantime2016}        &EN,ES,IT,NL \\
+VoxEL$_R$                           &DE,EN,ES,FR,IT\\  
 VoxEL$_S$                           &DE,EN,ES,FR,IT\\ 
 \bottomrule
 \end{tabular}
 %}
 \end{table}
 
-So far, the major effort in EL has been devoted for English scenarios, but how well perform state-of-the-art approaches over non-English corpora? One of the inconvenient to respond to this question is the short list of available multilingual datasets, which are the basis of quality measurement. We show in Table~\ref{tab:datasets} the current availability of EL datasets in the literature. We can observe in Table~\ref{tab:datasets} that the majority of current datasets only involve English information. Some Non-English experiments are commonly performed for asses multilingual entities, but mainly English results are compared with other approaches. For this reason, we can not locate which are the best approaches suitable for Non-English context.  
+Thus far, the bulk of effort in EL research has been devoted to English texts. However, more recently, a number of multilingual EL systems -- supporting multiple languages -- have been proposed. Such systems raise new questions for evaluating EL: How well would state-of-the-art approaches perform over non-English corpora? How would performance vary across languages (and why)? Given that EL often targets named entities, how important is it for EL systems to be configurable for different languages (e.g., \textit{Michael Jackson}'s name does not change with language, only with alphabet)? Given recent improvements in machine translation, how do multilingual EL systems perform versus translating input text?
 
-Can we apply EL approaches to text corpora written in a uncover language? No much work in this direction has been done neither. We formulation of this question due to some proper names either do not change cross-language languages or their translations are very similar to them. So, it could be interesting just to perform current systems over text written in an uncovered language. We setting in~\cite{Rosales-MendezP17} an experiment with this characteristic, performing Babelfy, DBpedia-Spotlight, WikiMe, TagME, THD and AIDA over the same text written in English and Spanish, where only the first three support Spanish. We select SemEval 2015  Task 13 dataset due to it was part of a competition and we could valid our benchmark model with their participant. 
+One challenge faced for responding to these questions is the short list of multilingual datasets available that could be used to evaluate EL performance for various languages. In Table~\ref{tab:datasets} we survey a variety of EL datasets available in the literature, where we can observe in Table~\ref{tab:datasets} that the majority only consider English text; others that consider non-English texts only offer one language. While a number of multilingual datasets have now been made available, they further present some issues for comparing EL systems across languages, as we will discuss later.
 
-We show in Table~\ref{tab:evaluateEL} the obtained result, as you can observe, for all the cases these approaches are equally good or better for English than for Spanish. These behaviours are compressible for those approaches that do not support Spanish, TAGME involve the anchor text of the English Wikipedia pages, THD uses the Search API of English Wikipedia to select the candidate entities, and AIDA incorporates part-of-speech tagger for the ER phase. This fact explains they behaviour for Spanish. On the other hand, we consider this result is due to the three main factors (a) Wikipedia contains different information for both languages, (b) the models/techniques changes according to the target language, for example, DBpedia-Spotlight's ER use different models according to the targeted language, and (c) the variations in the languages themselves, as for example, recognize ``Star Wars'' is more challenge than do it for it translation ``La guerra de las galaxias''. 
 
-In this experiment we run each system twice for each language, initially, we take as input the sentences, and next to whole document. In this way, we can observe their quality from two different points of view, which both are presented in real environments. While some systems are proposed to deal with short text, (e.g., TagMe), the general behavior if the involved approaches are not substantially different. 
+\paragraph{Initial Results:} Taking an existing multilingual dataset -- SemEval 2015 Task 13 -- in~\cite{Rosales-MendezP17}, we perform initial experiments to compare the performance of popular EL systems for English and Spanish texts, testing Babelfy, DBpedia-Spotlight, WikiMe, TagME, THD and AIDA. Only the first three of these systems can be explicitly configured for Spanish texts. Table~\ref{tab:evaluateEL} offers an overview of the main results. As can be observed, systems generally perform considerably better for English than Spanish, particularly (but not limited to) EL systems not configurable for Spanish. We consider this result as being potentially due to three main factors (a) KBs (e.g., Wikipedia) contains different information for both languages with potentially more information available in English, (b) the models/techniques change according to the target language where, for example, DBpedia-Spotlight's ER uses different models according to the targeted language, and (c) the presence of variations in the languages themselves, where, for example, recognizing ``\textit{Star Wars}'' is less challenging than the Spanish version ``\textit{La guerra de las galaxias}'' due to capitalization rules in Spanish and the phrase length.
+
+%In this experiment we run each system twice for each language, initially, we take as input the sentences, and next to whole document. In this way, we can observe their quality from two different points of view, which both are presented in real environments. While some systems are proposed to deal with short text, (e.g., TagMe), the general behavior if the involved approaches are not substantially different. 
 
 \begin{table}[tb!]
 \centering
-\caption{Overall EL evaluation of selected approaches for the SemEval 2015 Task 13 in Spanish (ES) and English (EN). Approaches configured for Spanish are italicized.}
+\caption{Overall EL evaluation ($F_1$) of selected approaches for the SemEval 2015 Task 13 in Spanish (ES) and English (EN). Approaches configured for Spanish are italicized.}
 \label{tab:evaluateEL}
 \begin{tabular}{lrr}
 \toprule
 \textbf{System} &~~~\textbf{ES}~~~&~~~\textbf{EN}~~~ \\ \midrule
-\multicolumn{3}{c}{\textit{Sentence level}} \\ \midrule
-\textit{Babelfy}          &0.420&0.568\\\midrule
-\textit{DBpedia-Spotlight}&0.364&0.414\\\midrule
-\textit{WikiMe}           &0.033&0.051\\\midrule
-TAGME                     &0.179&0.463\\\midrule
-THD                       &0.069&0.120\\\midrule
-AIDA                      &0.010&0.044\\
-\midrule
-\multicolumn{3}{c}{\textit{Document level}} \\ \midrule
-\textit{Babelfy}          &0.439&0.602\\\midrule
-\textit{DBpedia-Spotlight}~~~~&0.337&0.414\\\midrule
-\textit{WikiMe}           &0.043&0.043\\\midrule
-TAGME                     &0.133&0.395\\\midrule
-THD                       &0.069&0.110\\\midrule
+%\multicolumn{3}{c}{\textit{Sentence level}} \\ \midrule
+%\textit{Babelfy}          &0.420&0.568\\
+%\textit{DBpedia-Spotlight}&0.364&0.414\\
+%\textit{WikiMe}           &0.033&0.051\\
+%TAGME                     &0.179&0.463\\
+%THD                       &0.069&0.120\\
+%AIDA                      &0.010&0.044\\
+%\midrule
+%\multicolumn{3}{c}{\textit{Document level}} \\ \midrule
+\textit{Babelfy}          &0.439&0.602\\
+\textit{DBpedia-Spotlight}~~~~&0.337&0.414\\
+\textit{WikiMe}           &0.043&0.043\\ \midrule
+TAGME                     &0.133&0.395\\
+THD                       &0.069&0.110\\
 AIDA                      &0.010&0.046\\
 \bottomrule
 \end{tabular}
@@ -323,15 +335,17 @@ AIDA                      &0.010&0.046\\
 
 
 
-\subsection{Multilingualism in EL}
+\paragraph{Further Results:} One of the obstacles to ongoing research on multilingual EL is the low availability of datasets with the same text in different languages. According to our survey in Table~\ref{tab:evaluateEL}, there are only three multilingual datasets available (the VoxEL datasets are proposed by us). As we detected in the initial work described previously, each of the three datasets has its own limitations. SemEval 2015 Task 13 is composed of four documents on biomedical, math, computer and social topics; DBpedia Abstracts\footnote{\url{http://wiki-link.nlp2rdf.org/abstracts/}; January 1st, 2018} is a large corpus build automatically from the abstracts (first paragraph) the Wikipedia pages, containing in total 39132 documents; and MEANTIME contains annotations of 120 news articles from WikiNews\footnote{\url{https://en.wikinews.org/}; January 1st, 2018} with annotations of entities, events, temporal information and semantic roles. However, DBpedia Abstracts is not a parallel corpus: the text differs across languages, making it unsuitable for comparing performance across languages. On the other hand, while SemEval 2015 Task 13 and MEANTIME aim to be parallel corpora, they have different annotations in different languages. Hence these datasets are not ideal for comparing the performance of EL systems across different languages (though they can be used for comparing EL systems across individual languages). Furthermore, these datasets adopt a particular notion of entity, which as argued previously, may not be that agreed upon by the community.
 
-One of the obstacles to ongoing research on multilingual EL is the low availability of datasets with the same text in different languages. According to our review, as you can observe in Table~\ref{tab:evaluateEL}, there are only three multilingual datasets available. SemEval 2015 Task 13 is composed of four documents about a biomedical, math, computer and social topics; DBpedia Abstracts\footnote{\url{http://wiki-link.nlp2rdf.org/abstracts/}; January 1st, 2018} is a large corpus build automatically from the abstracts (first paragraph) the Wikipedia pages, containing in total 39132 documents; and MEANTIME contains annotation of 120 news articles from WikiNews\footnote{\url{https://en.wikinews.org/}; January 1st, 2018} with annotations of entities, events, temporal information and semantic role. However, these datasets do not contain the same content cross-language. While the text from the document of DBpedia Abstract is different cross-language, SemEval 2015 Task 13 and MEANTIME does not have the same annotations. So, it is a problem in these conditions to compare system results in different languages. 
+In order to better compare EL performance across multiple languages, we proposed a new multilingual corpus called VoxEL~\cite{VoxEL2018} with the aim of ensuring the same annotations across different languages, as well as reflecting in the dataset the lack of consensus on what is an entity. VoxEL is based on 15 news articles from the European newsletter VoxEurop\footnote{http://www.voxeurop.eu/; January 1st, 2018}, which is translated by professionals to different European languages. We first aligned the sentences and entities across languages, resolving cases where some entities and sentences were omitted/changed in the translations. To address the lack of consensus about what is an entity, we include two versions of the same dataset: one \textit{strict} version that includes only those entities that all systems appear to agree should be linked (i.e., \textit{Person}, \textit{Location} and \textit{Organization}), and another \textit{relaxed} version that includes also all mentions (including overlapping mentions) with a Wikipedia page related to them (e.g., `software',  `resort', etc.). Our results again show that -- aside from Babelfy -- EL systems generally perform much better over English texts. We also compare in~\cite{Rosales-MendezH18a} the idea of using machine translation in EL environments to translate the input text rather than configuring the EL system for the native text. The results show that the majority of systems -- namely DBpedia Spotlight, FREME and TagMe -- perform better when the input text is either in English, or translated to English. %On the other hand, Babelfy commonly obtains better results for (translated) Spanish texts in the Relaxed version, and (translated) Italian texts in the Strict version. 
 
-For this reason and for the plethora of entity definition presented in the literature, we propose VoxEL in~\cite{VoxEL2018}. VoxEL is based on 15 news articles from the European newsletter VoxEurop\footnote{http://www.voxeurop.eu/; January 1st, 2018}, which is translated by professionals to different European languages. We first aligned the sentences and entities cross-language, due to there were cases when some entities and sentences were omitted/changed in the translations, so we erase these differences. Only the cases when Proper Names were replaced by pronouns were fixed. To attack the diversity of definitions about what is an entity, we include two version of the same dataset, one \textit{strict} version that include only those entities that all system should link (i.e., \textit{Person}, \textit{Location} and \textit{Organization}), and other \textit{relaxed} which include also all the mention with a Wikipedia page related to them (e.g., `software' and `owner'). 
 
-We compare in~\cite{Rosales-MendezH18a} the suitability of machine translation in EL environments by the five languages included in VoxEL: German, English, Spanish, Italian and French. In this direction, we select four of the aforementioned approaches and we setting them in the five languages. For each setting, we apply the system to the translated text of the document of VoxEL corresponding to the other four languages. The results show that the majority of them -- namely DBpedia Spotlight, FREME and TagMe -- perform better when the input text is either in English, or translated to English. On the other hand, Babelfy commonly obtains better results for (translated) Spanish texts in the Relaxed version, and (translated) Italian
-texts in the Strict version. 
+\subsection{Configurable EL Framework}
 
+Our general hypothesis in this Ph.D. work is that when it comes to EL systems, one size does not fit all: different scenarios and different applications may have different requirements for an EL system, including, but not limited to, the types of entities targeted, the languages supported, etc. Drawing the Ph.D. work together, our goal is to be able to perform finer-grained evaluation of EL systems under different requirements and different assumptions. Going one step further, rather than evaluating EL systems, we wish to be able to evaluate the effects of different ER and ED techniques. A given EL system already configures a number of techniques into one solution, where the results of a system then confound the performance of these techniques. While some EL papers present results for ER and ED tasks separately, we propose to go one step further.
+
+
+\paragraph{Proposal:} We propose to create a modular EL framework that implements a selection of the most important EL techniques found in the literature. Such a framework should allow for creating custom EL pipelines that allow for evaluating and composing techniques according to the requirements of a particular application. The challenges posed by this proposal are various and include not only the engineering challenge of developing such a modular framework but also some non-trivial research questions. First we must address the question of how the requirements of a particular application can be represented. Second we must consider what datasets and metrics can be used to evaluate individual EL techniques (and their composition) per these requirements. Though ambitious, if successful, this stage of the Ph.D.\ work could lead to a better understanding of how EL techniques perform under different assumptions and further offer the practical contribution of a generalized EL framework adaptable to a broader variety of applications and settings.
 
 %---------------------------------------------------------------------
 \section{Methodology}
