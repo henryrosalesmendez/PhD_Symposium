@@ -1,0 +1,367 @@
+%
+% The first command in your LaTeX source must be the \documentclass command.
+\documentclass[sigconf]{acmart}
+
+
+
+\usepackage[utf8]{inputenc}
+\usepackage{fancyvrb}
+\usepackage{mdframed}
+\usepackage{graphicx}
+\usepackage{comment}
+\usepackage{xspace}
+%\usepackage[usenames, dvipsnames]{xcolor}
+%\usepackage{hyperref}
+\usepackage{amsmath}
+\newcommand{\argmin}{\arg\!\min}
+\newcommand{\argmax}{\arg\!\max}
+
+%para el simbolo de chequeado
+\usepackage{amssymb}% http://ctan.org/pkg/amssymb
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\usepackage{booktabs} 
+\usepackage{multirow}
+
+\newcommand{\ah}[1]{{\color{blue}\textsc{ah:} #1}}
+
+\usepackage{soul} %middleline
+\usepackage{pgfplots}
+
+
+
+
+%
+% defining the \BibTeX command - from Oren Patashnik's original BibTeX documentation.
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08emT\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+    
+% Rights management information. 
+% This information is sent to you when you complete the rights form.
+% These commands have SAMPLE values in them; it is your responsibility as an author to replace
+% the commands and values with those provided to you when you complete the rights form.
+%
+% These commands are for a PROCEEDINGS abstract or paper.
+\copyrightyear{2018}
+\acmYear{2018}
+\setcopyright{acmlicensed}
+\acmConference[PhD Track-WWW 2019]{PhD Symposium session of The Web Conference 2019}{May 13--17, 2019}{San Francisco, USA}
+\acmBooktitle{PhD Symposium session of The Web Conference 2019, May 13--17, San Francisco, USA}
+\acmPrice{15.00}
+\acmDOI{10.1145/1122445.1122456}
+\acmISBN{978-1-4503-9999-9/18/06}
+
+%
+% These commands are for a JOURNAL article.
+%\setcopyright{acmcopyright}
+%\acmJournal{TOG}
+%\acmYear{2018}\acmVolume{37}\acmNumber{4}\acmArticle{111}\acmMonth{8}
+%\acmDOI{10.1145/1122445.1122456}
+
+%
+% Submission ID. 
+% Use this when submitting an article to a sponsored event. You'll receive a unique submission ID from the organizers
+% of the event, and this ID should be used as the parameter to this command.
+%\acmSubmissionID{123-A56-BU3}
+
+%
+% The majority of ACM publications use numbered citations and references. If you are preparing content for an event
+% sponsored by ACM SIGGRAPH, you must use the "author year" style of citations and references. Uncommenting
+% the next command will enable that style.
+%\citestyle{acmauthoryear}
+%\pgfplotsset{compat=1.15}
+%
+% end of the preamble, start of the body of the document source.
+\begin{document}
+
+%
+% The "title" command has an optional parameter, allowing the author to define a "short title" to be used in page headers.
+\title{Towards Better Entity Linking Evaluation}
+
+%
+% The "author" command and its associated commands are used to define the authors and their affiliations.
+% Of note is the shared affiliation of the first two authors, and the "authornote" and "authornotemark" commands
+% used to denote shared contribution to the research.
+\author{Henry Rosales-M\'endez}
+\affiliation{%
+  \institution{DCC, University of Chile}
+}
+\email{hrosales@dcc.uchile.cl}
+
+
+
+
+%
+% By default, the full list of authors will be used in the page headers. Often, this list is too long, and will overlap
+% other information printed in the page headers. This command allows the author to define a more concise list
+% of authors' names for this purpose.
+\renewcommand{\shortauthors}{Rosales-M\'endez et al.}
+
+%
+% The abstract is a short summary of the work to be presented in the article.
+\begin{abstract}
+The Entity Linking (EL) task is concerned with linking entity mentions in a text collection with their corresponding knowledge-base entries. Despite the progress made in the evaluation of EL systems, there is an evident disagreement in the community about what should EL link, which complicate the quality measurement. This Ph.D. research tackles some problems concerned with EL evaluations,  which were faced before the designing of an agnostic-language approach. Among of them, we stress (a) the lack of consensus about the definition of ``entity'', (b) the scarcity of datasets that allow the differentiation of strict and relaxed annotations (c) the suitability of machine translation to achieve multilingualism, (d) the performance of EL approaches out of their supported languages, and (e) the proposition of datasets that allows the cross-language comparison. Despite that the formulation and addressing of these issues constitute a step forward in our investigation, there are still inconvenient that we will abord before the designing of our model. Our next steps are aimed firstly to propose a universal definition of ``entity'' that could integrate the current ones. Secondly, we are planning to propose a quality measure that allow the comparison of approaches that are targeting different sets of entities. 
+\end{abstract}
+
+%
+% The code below is generated by the tool at http://dl.acm.org/ccs.cfm.
+% Please copy and paste the code instead of the example below.
+%
+\begin{comment}
+\begin{CCSXML}
+<ccs2012>
+ <concept>
+  <concept_id>10010520.10010553.10010562</concept_id>
+  <concept_desc>Computer systems organization~Embedded systems</concept_desc>
+  <concept_significance>500</concept_significance>
+ </concept>
+ <concept>
+  <concept_id>10010520.10010575.10010755</concept_id>
+  <concept_desc>Computer systems organization~Redundancy</concept_desc>
+  <concept_significance>300</concept_significance>
+ </concept>
+ <concept>
+  <concept_id>10010520.10010553.10010554</concept_id>
+  <concept_desc>Computer systems organization~Robotics</concept_desc>
+  <concept_significance>100</concept_significance>
+ </concept>
+ <concept>
+  <concept_id>10003033.10003083.10003095</concept_id>
+  <concept_desc>Networks~Network reliability</concept_desc>
+  <concept_significance>100</concept_significance>
+ </concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Computer systems organization~Embedded systems}
+\ccsdesc[300]{Computer systems organization~Redundancy}
+\ccsdesc{Computer systems organization~Robotics}
+\ccsdesc[100]{Networks~Network reliability}
+
+%
+% Keywords. The author(s) should pick words that accurately describe the work being
+% presented. Separate the keywords with commas.
+\keywords{datasets, neural networks, gaze detection, text tagging}
+
+%
+% A "teaser" image appears between the author and affiliation information and the body 
+% of the document, and typically spans the page. 
+
+\begin{teaserfigure}
+  \includegraphics[width=\textwidth]{sampleteaser}
+  \caption{Seattle Mariners at Spring Training, 2010.}
+  \Description{Enjoying the baseball game from the third-base seats. Ichiro Suzuki preparing to bat.}
+  \label{fig:teaser}
+\end{teaserfigure}
+\end{comment}
+%
+% This command processes the author and affiliation and title information and builds
+% the first part of the formatted document.
+\maketitle
+
+%------------------------------------------------------------
+\section{Problem}
+
+Entity Linking (EL) is a task in Information Extraction (IE) that focuses on linking the entity mentions in a text collection with entity identifiers in a given Knowledge Base (KB). Such a task has various applications, including semantic search, document classification, semantic annotation, and text enrichment, as well as forming the basis for further IE processes. 
+
+Despite many international conferences (e.g., WWW\footnote{\url{https://www2019.thewebconf.org}; January 1st, 2019}, ISWC\footnote{\url{https://iswc2019.semanticweb.org/}; January 1st, 2019}, ESCW\footnote{\url{https://2019.eswc-conferences.org/}; January 1st, 2019}) have promoted EL investigations -- and thus it has gained the attention of many researches -- it is still unclear what should EL link. There is evidence of disagreements in the EL community in this aiming, and as consequence, the same mention is omitted/included by different systems. This fact is shown in Figure~1 that contains the performance of four state-of-the-art systems that are popular in the community: Babelfy~\cite{0001RN14}, DBpedia Spotlight~\cite{MendesJGB11}, TagMe~\cite{FerraginaS10} and FRED~\cite{GangemiPRNDM17}. As we can observe in Figure~1, there are not agreement among the involved systems. While FRED and Babelfy consider only proper names, TagME and DBpedia Spotlight also include other nouns for which a corresponding KB entity exists and which do not constitute names.
+
+\begin{figure}[!thb]
+\label{fig:exp1}
+\begin{mdframed}
+A [second]$^{t}$, larger and more [theatrical]$^{t}$ [Cirque]$^{t}$ [show]$^{t}$, [\{Michael Jackson\}$^{btdf}$: One]$^{bt}$, designed for [residency]$^{t}$ at the [Mandalay Bay]$^{btdf}$ [resort]$^{d}$ in [Las \{Vegas\}$^{b}$]$^{td}$.
+\end{mdframed}
+\caption{Showing correct annotations of Babelfy (b), TagME (t), DBpedia Spotlight (d) and FRED (f) over the same input.}
+\end{figure}
+
+This lack of consensus affects all further processing of EL-system output, because different  scenarios of application have different requirements on what mentions should be involved. On the other hand, this problem also complicates EL assessment because we do not know how can define the ideal result that such system should achieve. Some efforts have been done to standardize which mention we should identify for annotation. This is the case of Jha et al.~\cite{JhaRN17}, who propose a set of rules to serve as guideline for benchmark creation, however, it forces the adoption of some considerations that exclude some specific domains. For instance, Jha et al., advocate for the omission of overlapping mentions, but Ling et al.~\cite{LingSW15} disagree. 
+
+Several EL benchmark datasets have been proposed so far showing this disagreement. While KORE50~\cite{HoffartSNTW12} only annotate proper names, DBpedia Spotlight dataset include annotations of common nouns as \textit{software} and \textit{owner}. Additionally, DBpedia Spotlight dataset includes overlaps, for example, ``Google car'' is linked with \texttt{dbo:Google\_self-driving\_car}\footnote{Throughout, we use well-known prefixes according to \url{http://prefix.cc}}, and simultaneously, `car' is linked to \texttt{dbo:Car}. However, this disagreement is not the only deficiency on current datasets, only a few of topic and scenarios have been covered so far, among of them the multilingualism. 
+
+Some steps have been taken to go forward in a multilingual context, in this line, some authors devote efforts to provide approaches with a large list of languages. For instance, this is the case of MAG~\cite{MoussallemURN18}, a multilingual EL system that allows annotations in 40 languages. However, how well EL systems perform outside of English -- as a primary language -- ? Those multilingual approaches behave equally for all of their supported languages? Are multilingual EL approaches necessary with recent improvement in machine translation? These questions are not deeply studied yet in the literature. Indeed, only a few of current EL datasets are multilingual, which difficult any kind of multilingual experimentation. 
+
+
+
+%In some works, EL is only considered to refer to the ED phase~\cite{Plu0T16}. Here we see EL as being composed of both ED and ER.
+%-----------------------------------------------------------------------------
+\section{Background}
+Entity Linking is a task in Information Extraction that focuses on linking the entity mentions in a text collection with entity identifiers in a given knowledge base. Such a task has various applications, including semantic search, document classification, semantic annotation and text enrichment, as well as forming the basis for further Information Extraction processes. 
+
+Formally, let $E$ be a set of entities in a KB and $M$ the set of entity mentions in a given text collection. The EL process focuses on linking each entity mentions $m\in{}M$ in a text collection with an entity identifiers $e\in{}E$ in a given Knowledge Base (KB). Nowadays, there are large KBs that describe a huge list of entities, however, new entities emerge every day, so it is practically impossible to pretend to include them all. Those mention not included in the KB are labeled \textit{NIL} (Not In Lexicon).
+
+Generally, EL models commonly are separated in two main phases detailed below:
+\begin{description}
+\item[Entity Recognition (ER)] This phase spots which words of the input text should be taken as mentions. This problem is also addressed by the Named Entity Recognition (NER), where a variaty of thechniques have been emploied with this goal. On the other hand, some works regarding ER only as a independent task, out of the scope of EL~\cite{Plu0T16}. 
+
+\item[Entity Disambiguation (ED)] This phase decide which KB entities should be associated with the identified mentions. This phase is divided as below:
+\begin{description}
+\item \textit{Candidate entity generation}:
+For each entity mention $m\in{}M$ this stage selects $E_m$: a candidate set $E_m \subseteq E$ that represents entities with a high probability of corresponding to $m$ is selected, often based on matching $m$ with entity labels in the knowledge base.
+
+\item \textit{Candidate entity ranking}:
+Each entity $e_m \in E_m$ is ranked according to an estimated confidence that it is the referent of $m$. This can be performed considering a variety of features, such as the perceived ``popularity'' of $e_m$, its relation to candidates for nearby mentions, and so forth. The candidate in $E_m$ with the best ranking may be selected as the link for $m$, possibly assuming it meets a certain threshold confidence. 
+
+\item \textit{Unlinkable mention prediction}:
+Some tools consider unlinkable mentions, where no entity in the knowledge base meets the required confidence for a match to a given entity mention $m$. Depending on the application scenario, these mentions may be simply ignored, or may be proposed as ``emerging entities'' that could be added to the knowledge base.
+\end{description}
+\end{description}
+In many modern EL systems, the line between the EL and ED phases is blurred; these systems include the End-to-End approaches previously mentioned, but also other systems that apply ER and EL jointly in the same model~\cite{WangLWC12,NguyenTW16}. Other systems assume that entity mentions have already been isolated (using some existing approach) and rather focus specifically on the ED phase~\cite{Plu0T16}. 
+
+Several EL approaches have been proposed in the literature. Some of them take annotations, KB entities and their relationship as a graph and perform heuristic to find the proper matching. For instance, Babelfy~\cite{0001RN14} and AIDA~\cite{HoffartYBFPSTTW11} search the densest sub-graph applying a Random Walk with Restart and a greedy algorithm respectively. Other approaches as TagME~\cite{FerraginaS10} , THD~\cite{DojchinovskiK13}, DBpedia Spotlight~\cite{MendesJGB11} and FREME~\cite{SasakiDN16} are based on similarity functions between mentions and the KB content. For instance, TagME ranks the candidate entities by two functions: \textit{commonness} and \textit{relatedness}, the first count how frequently an anchor text is linked to a particular Wikipedia entity and the second, returns how often candidate entities for different mentions are annotated from the same Wikipedia page. On the other hand, WIKIME~\cite{TsaiR16} use multilingual embedding which is trained for words and Wikipedia titles. 
+
+%--------------------------------------------------------------------
+\section{PROPOSED APPROACH}
+While our Ph.D. proposal intent to propose a multilingual EL approach, this research is only focused on all work done so far, previously to its proposition. Due to the specified problem, we focus this work in some aspect that conducts to a better evaluation. In this direction, the following research questions will be addressed:
+\begin{enumerate}
+    \item What should Entity Linking link?
+    \begin{itemize}
+        \item[a)] What is an entity?
+        %\item[b)] Why more than one entity definition?
+    \end{itemize}
+    
+    \item How well EL systems perform outside of English?
+    \begin{itemize}
+        \item[a)] How does EL performance differ between English and Spanish?
+        \item[b)] Can we apply EL approaches to text corpora written in a uncover language?
+        \item[c)] Does the performance of the multilingual EL approaches depend on the input granularity?
+    \end{itemize}
+    
+    \item Do the current multilingual datasets allow cross-lingual comparisons of system outputs?
+    \item Are multilingual EL approaches necessary with recent improvement in machine translation? 
+    \begin{itemize}
+        \item[a)] Could we not simply focus on supporting one language in the EL system and translate the input text to that language?
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Lack of consensus}
+
+The concept of ``named entity'' was firstly coined by 6th Message Understanding Conference~\cite{GrishmanS96} (MUC-6) where the entities are gather in the classes \textit{Person}, \textit{Location}, \textit{Organization} and other numeric/temporal expressions. Many ER models and ER benchmark datasets were proposed to recognize entities from these classes. This perspective is inherited by many End-to-End EL systems which keep identifying mentions with ER tools. However, mentions are no longer simply recognized in EL, but also linked to a reference KB that contains also entities that do not correspond to traditional MUC-6 types. For instance, in Figure~1 all the involved systems link the mention ``Michael Jackon'' belonging to the class \textit{Person}, but there is a disagreement to link ``Michael Jackson: One'' which is a theatrical productions by Cirque du Soleil with available corresponding entities in DBpedia and Wikipedia. In this lines, some authors have extended the initial MUC-6 classes, including also \textit{products}, \textit{financial entities}~\cite{MinardSUAESS16}, \textit{films}, \textit{scientists}~\cite{EtzioniCDPSSWY05}, etc. On the other hand, other authors propose to separate current classes to more specific ones, for instance, (e.g., deriving \textit{city}, \textit{state}, \textit{country} from the class \textit{location}~\cite{Fleischman01}).
+
+Class-based definitions of entities are inflexible because leave out several entities from large KBs, for instance, only Wikidata has entities from 50,000 unique classes. Therefore, other authors advocate for more general definitions, but these often lack formality~\cite{EckhardtHPS14, UrenCIHVMC06}. For example, the definition ``substrings corresponding to world entities'' used by Ling et al.~\cite{LingSW15} is cyclical, due to use the word ``entity'' to define what is it. 
+
+Instead of answering the semantic question ``what is an `entity'?'', our position is to answer better the practical question ``what should Entity Linking link?''. In this context, we stress that we should target those entities that are aware of the application~\cite{ourAMW2018}. In this way, the targeted mentions for Semantic Search task, for instance, maybe can be different of those included in a Relation Extraction problem. Since we can target only \textit{Person} entities to find all document about pop singers in a semantic search, but in contrast, it is desirable to incorporate a greater number of mentions for discovering relations. 
+
+%---------------------------------------------------------------------
+\subsection{Non-English scenarios in EL}
+
+
+
+\newcommand{\ccell}[1]{\multicolumn{1}{c}{#1}}
+%\setlength{\tabcolsep}{1.2ex}
+\begin{table}[tb!]
+\centering
+
+\caption{Survey of dataset for EL task. For multilingual datasets, the quantities shown refer to the English data available. We present metadata about the relaxed and strict version of our dataset by \textsc{VoxEL}$_R$ and \textsc{VoxEL}$_S$ respectively.}
+\label{tab:datasets} 
+%\resizebox{\textwidth}{!}{
+\begin{tabular}{lc}
+\toprule
+\textbf{Dataset}~~~~~~~~~~~~~~~~~~ & \ccell{\textbf{Languages}}\\\midrule
+AIDA/CoNLL-Complete~\cite{aida2011}&EN \\\midrule
+KORE50~\cite{kore50}                &EN \\\midrule
+IITB~\cite{IITB2009}                &EN \\\midrule
+ACE2004~\cite{aquaint}              &EN\\\midrule
+AQUAINT~\cite{aquaint}              &EN \\\midrule
+MSNBC~\cite{cucerzan2007large}      &EN \\\midrule
+DBpedia Spotlight
+\cite{mendes2011dbpedia}            &EN \\\midrule
+N3-RSS 500~\cite{n3}                &EN \\\midrule
+Reuters 128~\cite{n3}               &EN \\\midrule
+Wes2015~\cite{wes2015}              &EN \\\midrule
+News-100~\cite{n3}                  &DE \\\midrule
+Thibaudet~\cite{renden2016}         &FR \\\midrule
+Bergson~\cite{renden2016}           &FR \\\midrule
+SemEval 2015 
+Task 13~\cite{moro2015semeval}      &EN,ES,IT \\ \midrule
+DBpedia Abstracts
+~\cite{abstracts2016}               &DE,EN,ES,FR,IT,JA,NL \\\midrule
+MEANTIME \cite{meantime2016}        &EN,ES,IT,NL \\\midrule 
+VoxEL$_R$                           &DE,EN,ES,FR,IT\\\midrule  
+VoxEL$_S$                           &DE,EN,ES,FR,IT\\ 
+\bottomrule
+\end{tabular}
+%}
+\end{table}
+
+So far, the major effort in EL has been devoted for English scenarios, but how well perform state-of-the-art approaches over non-English corpora? One of the inconvenient to respond to this question is the short list of available multilingual datasets, which are the basis of quality measurement. We show in Table~\ref{tab:datasets} the current availability of EL datasets in the literature. We can observe in Table~\ref{tab:datasets} that the majority of current datasets only involve English information. Some Non-English experiments are commonly performed for asses multilingual entities, but mainly English results are compared with other approaches. For this reason, we can not locate which are the best approaches suitable for Non-English context.  
+
+Can we apply EL approaches to text corpora written in a uncover language? No much work in this direction has been done neither. We formulation of this question due to some proper names either do not change cross-language languages or their translations are very similar to them. So, it could be interesting just to perform current systems over text written in an uncovered language. We setting in~\cite{Rosales-MendezP17} an experiment with this characteristic, performing Babelfy, DBpedia-Spotlight, WikiMe, TagME, THD and AIDA over the same text written in English and Spanish, where only the first three support Spanish. We select SemEval 2015  Task 13 dataset due to it was part of a competition and we could valid our benchmark model with their participant. 
+
+We show in Table~\ref{tab:evaluateEL} the obtained result, as you can observe, for all the cases these approaches are equally good or better for English than for Spanish. These behaviours are compressible for those approaches that do not support Spanish, TAGME involve the anchor text of the English Wikipedia pages, THD uses the Search API of English Wikipedia to select the candidate entities, and AIDA incorporates part-of-speech tagger for the ER phase. This fact explains they behaviour for Spanish. On the other hand, we consider this result is due to the three main factors (a) Wikipedia contains different information for both languages, (b) the models/techniques changes according to the target language, for example, DBpedia-Spotlight's ER use different models according to the targeted language, and (c) the variations in the languages themselves, as for example, recognize ``Star Wars'' is more challenge than do it for it translation ``La guerra de las galaxias''. 
+
+In this experiment we run each system twice for each language, initially, we take as input the sentences, and next to whole document. In this way, we can observe their quality from two different points of view, which both are presented in real environments. While some systems are proposed to deal with short text, (e.g., TagMe), the general behavior if the involved approaches are not substantially different. 
+
+\begin{table}[tb!]
+\centering
+\caption{Overall EL evaluation of selected approaches for the SemEval 2015 Task 13 in Spanish (ES) and English (EN). Approaches configured for Spanish are italicized.}
+\label{tab:evaluateEL}
+\begin{tabular}{lrr}
+\toprule
+\textbf{System} &~~~\textbf{ES}~~~&~~~\textbf{EN}~~~ \\ \midrule
+\multicolumn{3}{c}{\textit{Sentence level}} \\ \midrule
+\textit{Babelfy}          &0.420&0.568\\\midrule
+\textit{DBpedia-Spotlight}&0.364&0.414\\\midrule
+\textit{WikiMe}           &0.033&0.051\\\midrule
+TAGME                     &0.179&0.463\\\midrule
+THD                       &0.069&0.120\\\midrule
+AIDA                      &0.010&0.044\\
+\midrule
+\multicolumn{3}{c}{\textit{Document level}} \\ \midrule
+\textit{Babelfy}          &0.439&0.602\\\midrule
+\textit{DBpedia-Spotlight}~~~~&0.337&0.414\\\midrule
+\textit{WikiMe}           &0.043&0.043\\\midrule
+TAGME                     &0.133&0.395\\\midrule
+THD                       &0.069&0.110\\\midrule
+AIDA                      &0.010&0.046\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+
+
+
+\subsection{Multilingualism in EL}
+
+One of the obstacles to ongoing research on multilingual EL is the low availability of datasets with the same text in different languages. According to our review, as you can observe in Table~\ref{tab:evaluateEL}, there are only three multilingual datasets available. SemEval 2015 Task 13 is composed of four documents about a biomedical, math, computer and social topics; DBpedia Abstracts\footnote{\url{http://wiki-link.nlp2rdf.org/abstracts/}; January 1st, 2018} is a large corpus build automatically from the abstracts (first paragraph) the Wikipedia pages, containing in total 39132 documents; and MEANTIME contains annotation of 120 news articles from WikiNews\footnote{\url{https://en.wikinews.org/}; January 1st, 2018} with annotations of entities, events, temporal information and semantic role. However, these datasets do not contain the same content cross-language. While the text from the document of DBpedia Abstract is different cross-language, SemEval 2015 Task 13 and MEANTIME does not have the same annotations. So, it is a problem in these conditions to compare system results in different languages. 
+
+For this reason and for the plethora of entity definition presented in the literature, we propose VoxEL in~\cite{VoxEL2018}. VoxEL is based on 15 news articles from the European newsletter VoxEurop\footnote{http://www.voxeurop.eu/; January 1st, 2018}, which is translated by professionals to different European languages. We first aligned the sentences and entities cross-language, due to there were cases when some entities and sentences were omitted/changed in the translations, so we erase these differences. Only the cases when Proper Names were replaced by pronouns were fixed. To attack the diversity of definitions about what is an entity, we include two version of the same dataset, one \textit{strict} version that include only those entities that all system should link (i.e., \textit{Person}, \textit{Location} and \textit{Organization}), and other \textit{relaxed} which include also all the mention with a Wikipedia page related to them (e.g., `software' and `owner'). 
+
+We compare in~\cite{Rosales-MendezH18a} the suitability of machine translation in EL environments by the five languages included in VoxEL: German, English, Spanish, Italian and French. In this direction, we select four of the aforementioned approaches and we setting them in the five languages. For each setting, we apply the system to the translated text of the document of VoxEL corresponding to the other four languages. The results show that the majority of them -- namely DBpedia Spotlight, FREME and TagMe -- perform better when the input text is either in English, or translated to English. On the other hand, Babelfy commonly obtains better results for (translated) Spanish texts in the Relaxed version, and (translated) Italian
+texts in the Strict version. 
+
+
+%---------------------------------------------------------------------
+\section{Methodology}
+
+Despite the formulation and addressing of this issues constitute a step forward in our investigation, our next steps are aimed to the proposition of a universal definition of ``entity'' that could integrate all the work done, and well as a quality measure that allow the comparison of approaches that are targeting a different set of entities. In this direction, our further work can be outlined through the following tasks:
+
+\begin{enumerate}
+    \item Review the state-of-the-art of current quality measures. Despite that many quality measures have been adopted in El from related areas (e.g., precision, recall, F$_1$, Accuracy), none of them take into account the differentiation of strict and relaxed annotations. 
+    
+    \item Propose a categorization of mention that allows the inclusion of current entity definitions, rather than only separate them on strict and relaxed.
+    \item Design and Build an EL architecture focused on multilingual environments.
+    \item Implement a general machine-learning framework based on the aforementioned architectures that allow us to combine features according to the application scenario.
+    
+    
+\end{enumerate}
+
+
+%----------------------------------------------------------------------------
+\section{Conclusion}
+
+As a phD proposal, we plan to develop a general machine-learning EL framework that allows us to overcome state-of-the-art approaches, specifically dealing with multilingual context. However, this ongoing research has been complicated due to several problems that difficult the progress. For instance, the lack of consensus about what should entity linking link, the scarcity of annotated datasets with the same text in different languages, and the lack of criteria of current quality measures to distinguish strict and relaxed annotations according to the different domains. 
+
+For this reason, in this paper we show what we are done to overcome this inconvenient. We stress that the definition of entity should be associated with the domain of application, as well as a new multilingual dataset that contains the same document, sentences and annotations coss-language. Du to is datasets properties, we use it to figure out that is better to translate text -- by machine translation -- and it as input for some EL approaches, than applied their own multilingual model. As future work, we plan to propose a quality measure that distinguish between strict and relaxed annotations. 
+
+%----------------------------------------------------------------------------
+\section{Acknowledgments}
+I want to thank my advisors Aidan Hogan ad Barbara Poblete for supervising my PhD research. This work was supported by CONICYT-PCHA/Doctorado Nacional/2016-21160017, by the Millennium Institute for Foundational Research on Data (IMFD) and by Fondecyt Grant No.\ 1181896.
+
+%
+% The next two lines define the bibliography style to be used, and the bibliography file.
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{bibfile}
+
+\end{document}
